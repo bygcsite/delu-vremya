@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#293133">
+  <meta name="description" content="Делу время — простое пространство для ваших задач.">
+  <title>Делу время — ваши задачи</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="site-header"><a class="brand" href="./"><span class="brand-mark" aria-hidden="true">✓</span> делу время<span class="brand-dot">.</span></a></header>
+  <main>
+    <section class="intro" aria-labelledby="title">
+      <p class="eyebrow">МЕСТО ДЛЯ ВАЖНОГО</p>
+      <h1 id="title">Один шаг.<br><span>Потом следующий.</span></h1>
+      <p class="description">Освободите голову — оставьте задачи здесь.<br>В своём ритме, по одному делу за раз.</p>
+    </section>
+    <section class="projects" aria-label="Проекты">
+      <div class="projects-heading"><h2>Проекты</h2><button id="show-project-form" type="button">+ Новый проект</button></div>
+      <form id="project-form" hidden autocomplete="off">
+        <label class="sr-only" for="project-name">Название проекта</label>
+        <input id="project-name" maxlength="60" placeholder="Название проекта" required>
+        <button type="submit">Создать</button><button id="cancel-project" type="button">Отмена</button>
+      </form>
+      <div class="project-navigation">
+        <div id="project-list" class="project-list" role="group" aria-label="Выбор проекта"></div>
+        <button id="toggle-archived" class="archive-toggle" type="button" aria-pressed="false">Архив проектов</button>
+      </div>
+      <div id="project-actions" class="project-actions" hidden>
+        <span id="selected-project-name"></span>
+        <button id="archive-project" type="button">Завершить проект</button>
+        <button id="delete-project" type="button">Удалить проект</button>
+      </div>
+      <p id="archive-empty" class="archive-empty" hidden>Завершённых проектов пока нет.</p>
+    </section>
+    <section class="workspace" aria-label="Список задач">
+      <div class="list-heading"><h2>Мои задачи <span id="total-count">0</span></h2><span class="local-badge"><span aria-hidden="true">◈</span> В вашем браузере</span></div>
+      <form id="task-form" autocomplete="off">
+        <label class="sr-only" for="task-input">Новая задача</label>
+        <span class="input-plus" aria-hidden="true">＋</span>
+        <input id="task-input" name="task" maxlength="300" placeholder="Что нужно сделать?" required>
+        <button class="add-button" type="submit">Добавить</button>
+      </form>
+      <div class="project-assignment"><label for="task-project">Проект новой задачи</label><select id="task-project" name="project" form="task-form"><option value="">Без проекта</option></select></div>
+      <div class="toolbar"><div class="filters" role="group" aria-label="Фильтр задач"><button type="button" data-filter="all" aria-pressed="true">Все</button><button type="button" data-filter="active" aria-pressed="false">В работе</button><button type="button" data-filter="completed" aria-pressed="false">Готово</button></div><span id="remaining-count" class="remaining"></span></div>
+      <ul id="task-list" aria-label="Задачи"></ul>
+      <div id="empty-state" class="empty-state"><span class="empty-icon" aria-hidden="true">✓</span><h3 id="empty-title">Всё начинается с одной задачи</h3><p id="empty-description">Добавьте первое дело и двигайтесь в своём темпе.</p></div>
+      <div class="list-footer"><span id="progress-label">Здесь начинается ваш прогресс</span><button id="clear-completed" type="button" hidden>Убрать выполненные</button></div>
+      <div class="progress-track"><div id="progress-bar"></div></div>
+    </section>
+    <p id="status" role="status" class="status" aria-live="polite"></p>
+  </main>
+  <dialog id="delete-project-dialog" aria-labelledby="delete-dialog-title" aria-describedby="delete-dialog-description">
+    <form id="delete-project-form">
+      <h2 id="delete-dialog-title">Удалить проект?</h2>
+      <p id="delete-dialog-description"></p>
+      <label class="delete-tasks-option">
+        <input id="delete-project-tasks" type="checkbox">
+        <span>Удалить все задачи вместе с проектом</span>
+      </label>
+      <p class="dialog-hint">Если не поставить галочку, задачи перейдут в раздел «Без проекта».</p>
+      <div class="dialog-actions">
+        <button id="cancel-delete-project" type="button" autofocus>Отмена</button>
+        <button class="confirm-delete" type="submit">Удалить проект</button>
+      </div>
+    </form>
+  </dialog>
+  <dialog id="move-task-dialog" aria-labelledby="move-task-title" aria-describedby="move-task-description">
+    <form id="move-task-form">
+      <h2 id="move-task-title">Сменить проект</h2>
+      <p id="move-task-description"></p>
+      <label for="move-task-project">Перенести задачу в</label>
+      <select id="move-task-project"></select>
+      <div class="dialog-actions">
+        <button id="cancel-move-task" type="button">Отмена</button>
+        <button class="confirm-move" type="submit">Перенести</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>
