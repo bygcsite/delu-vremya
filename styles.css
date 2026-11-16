@@ -957,3 +957,45 @@ dialog::backdrop {
   }
 }
 
+
+/* На телефоне общий фильтр проектов и архив находятся в одной строке. */
+#mobile-project-filter {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .project-navigation {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: stretch;
+  }
+
+  .project-navigation .project-list {
+    display: none;
+  }
+
+  #mobile-project-filter {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    appearance: none;
+    -webkit-appearance: none;
+    padding: 10px 32px 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background-color: var(--background);
+    color: var(--text);
+    font-size: 14px;
+    background-image:
+      linear-gradient(45deg, transparent 50%, var(--accent) 50%),
+      linear-gradient(135deg, var(--accent) 50%, transparent 50%);
+    background-position: calc(100% - 17px) 50%, calc(100% - 12px) 50%;
+    background-size: 5px 5px;
+    background-repeat: no-repeat;
+  }
+
+  .archive-toggle {
+    grid-column: auto;
+    height: 100%;
+  }
+}

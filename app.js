@@ -233,12 +233,33 @@ window.addEventListener('storage', event => {
   renderTasks();
 });
 
+document.querySelector('#mobile-project-filter').addEventListener('change', event => {
+  currentProject = event.target.value;
+  projectSelect.value = currentProject === 'all' ? '' : currentProject;
+  renderTasks();
+});
+
 // Переключение проекта влияет на список, счётчики и очистку выполненных.
 function renderProjects() {
   fillProjectSelect(projectSelect, projectSelect.value);
   const visibleProjects = projects.filter(project => project.archived === showArchived);
   const projectOptions = showArchived ? visibleProjects
     : [{ id: 'all', name: 'Все задачи' }, { id: '', name: 'Без проекта' }, ...visibleProjects];
+  const mobileFilter = document.querySelector('#mobile-project-filter');
+  mobileFilter.replaceChildren(...projectOptions.map(project => {
+    const option = document.createElement('option');
+    option.value = project.id;
+    option.textContent = project.name;
+    return option;
+  }));
+  mobileFilter.disabled = projectOptions.length === 0;
+  if (projectOptions.length === 0) {
+    const option = document.createElement('option');
+    option.textContent = 'Архив пуст';
+    mobileFilter.append(option);
+  } else {
+    mobileFilter.value = currentProject;
+  }
   const buttons = projectOptions.map(project => {
     const button = document.createElement('button');
     button.type = 'button';
