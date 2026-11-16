@@ -929,8 +929,10 @@ dialog::backdrop {
   background: var(--line);
 }
 
+/* Отступ от нижних углов удерживает полосу внутри скруглённой карточки. */
 .progress-track {
-  border-radius: 0 0 var(--radius) var(--radius);
+  margin: 0 var(--radius) 6px;
+  border-radius: 999px;
   overflow: hidden;
 }
 
